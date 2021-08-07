@@ -2,7 +2,7 @@
 
 // Open weather URL/api
 let baseURL = 'http://api.openweathermap.org/data/2.5/weather?zip='
-let apiKey = 'd756b048f0c16d349a0f970212259eb3'
+const apiKey = 'd756b048f0c16d349a0f970212259eb3'
 
 // User input index.html
 document.getElementById('generate').addEventListener('click', performAction);
@@ -10,7 +10,12 @@ document.getElementById('generate').addEventListener('click', performAction);
 // Initiate functions
 function performAction(e){
     const zip = document.getElementById('zip').value;
+    if(isNaN(zip)) {
+        alert("Please enter valid zip code");
+        return false;
+    } else {
     getWeather(baseURL, zip, apiKey)
+    }
 }
 
 // Async GET from Open Weather api
@@ -57,7 +62,7 @@ const updateUI = async () => {
     const request = await fetch('http://localhost:3000/all');
     try{
         const returnedData = await request.json();
-        document.getElementById('temp').innerHTML = "The termperature now is " + returnedData[0] + "℃";
+        document.getElementById('temp').innerHTML = "The temperature now is " + returnedData[0] + "℃";
         document.getElementById('date').innerHTML = "Today's date is the " + returnedData[1];
         document.getElementById('content').innerHTML = returnedData[2]
     }catch(error){
